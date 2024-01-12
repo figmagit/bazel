@@ -14,6 +14,7 @@
 package com.google.devtools.build.lib.remote.zstd;
 
 import com.github.luben.zstd.ZstdInputStreamNoFinalizer;
+import com.github.luben.zstd.RecyclingBufferPool;
 import com.google.protobuf.ByteString;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public final class ZstdDecompressingOutputStream extends OutputStream {
                   public int read(byte[] b, int off, int len) {
                     return inner.read(b, off, len);
                   }
-                })
+                }, RecyclingBufferPool.INSTANCE)
             .setContinuous(true);
   }
 
